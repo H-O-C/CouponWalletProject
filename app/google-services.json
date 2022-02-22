@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "776286666403",
+    "project_id": "mycouponwalletlg",
+    "storage_bucket": "mycouponwalletlg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776286666403:android:69c4225e605560e0af0916",
+        "android_client_info": {
+          "package_name": "com.example.mylogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776286666403-qf8ks7vg0v091fhkrqotrrg576neberg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAz9GtaB-sM6Y_cJALoZhCYu3T-z75ILI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776286666403-qf8ks7vg0v091fhkrqotrrg576neberg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

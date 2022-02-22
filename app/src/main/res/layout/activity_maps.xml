@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    >
+
+    <EditText
+        android:id="@+id/SearchBarEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Search"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        />
+
+
+    <Button
+        android:id="@+id/groceryStoresButton"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:text="Grocery Stores" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/google_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        />
+
+</LinearLayout>
