@@ -1,16 +1,15 @@
 package com.example.mylogin;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.mylogin.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,20 +17,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity implements GoogleMap.OnPoiClickListener{
 
 
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
+    private ActivityMapsBinding binding;
+    private GoogleMap temp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Set the layout file as the content view.
+
         setContentView(R.layout.activity_maps);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -46,9 +50,10 @@ public class MapsActivity extends AppCompatActivity {
             //Call Method
             getCurrentLocation();
         }
-
-
-
+        else
+        {
+            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
 
     }
 
@@ -64,12 +69,8 @@ public class MapsActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-            return;
         }
         task = client.getLastLocation();
-
-
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -87,16 +88,8 @@ public class MapsActivity extends AppCompatActivity {
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 10));
                             //Add marker on map
                             googleMap.addMarker(options);
-
-
-                            // pulls google maps but we need to make it in a fragment
-                            /*
-                            Uri gmmIntentUri = Uri.parse("geo:0,0?q=grocery_stores");
-                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                            mapIntent.setPackage("com.google.android.apps.maps");
-
-                            startActivity(mapIntent);
-                            */
+                            setMapLongClick(googleMap);
+                            setPoiClick(googleMap);
 
                         }
                     });
@@ -119,6 +112,48 @@ public class MapsActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void setPoiClick(final GoogleMap map)
+    {
+         temp = map;
+        map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener()
+        {
+
+
+            @Override
+            public void onPoiClick(PointOfInterest pointOfInterest)
+            {
+                Marker poiMarker = temp.addMarker(new MarkerOptions()
+
+                        .position(pointOfInterest.latLng)
+                        .title(pointOfInterest.name));
+                poiMarker.showInfoWindow();
+            }
+        });
+
+    }
+
+    private void setMapLongClick(final GoogleMap map) {
+        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+            @Override
+            public void onMapLongClick(LatLng latLng)
+            {
+                map.addMarker(new MarkerOptions().position(latLng));
+            }
+        });
+    }
+
+    @Override
+    public void onPoiClick(PointOfInterest pointOfInterest)
+    {
+        Marker poiMarker = temp.addMarker(new MarkerOptions()
+
+                .position(pointOfInterest.latLng)
+                .title(pointOfInterest.name));
+        poiMarker.showInfoWindow();
+    }
+
 
 
 

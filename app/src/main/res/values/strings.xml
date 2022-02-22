@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">mylogin</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="full_name">Full Name:</string>
+    <string name="email">Email:</string>
+    <string name="textview">TextView</string>
+    <string name="settings">Settings</string>
+    <string name="name">Name</string>
+    <string name="todo">TODO</string>
+    <string name="set_location">Set Location</string>
 </resources>

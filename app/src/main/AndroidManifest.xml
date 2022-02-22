@@ -21,6 +21,10 @@
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
             android:name=".Settings"
             android:exported="false" />
         <!--
@@ -38,10 +42,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
         <activity
             android:name=".Registraition"
             android:exported="false" />
