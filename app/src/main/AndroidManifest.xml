@@ -15,18 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mylogin">
         <activity
+            android:name=".Categories"
+            android:exported="true" />
+        <activity
+            android:name=".CouponPage"
+            android:exported="true" />
+        <activity
             android:name=".UserProfile"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ForgotPassword"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MapsActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".Settings"
-            android:exported="false" />
+            android:exported="true" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 

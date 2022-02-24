@@ -12,7 +12,7 @@ public class UserProfile extends AppCompatActivity
 
     Button mySettings; // Settings activity button
     Button myLocation; // set the user location
-
+    Button myCategories;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -20,6 +20,7 @@ public class UserProfile extends AppCompatActivity
         setContentView(R.layout.activity_user_profile);
         mySettings = (Button) findViewById(R.id.testBtn);
         myLocation = (Button) findViewById(R.id.location);
+        myCategories = (Button) findViewById(R.id.category);
         mySettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,6 +33,7 @@ public class UserProfile extends AppCompatActivity
                 startActivity(new Intent(UserProfile.this, MapsActivity.class));
             }
         });
+
     }
 
 

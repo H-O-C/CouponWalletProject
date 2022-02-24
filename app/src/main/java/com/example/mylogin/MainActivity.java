@@ -24,7 +24,7 @@ private TextView register, forgot_password;
 private EditText email , password;
 private Button Login;
 private FirebaseAuth mAuth;
-
+private Button category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,9 @@ private FirebaseAuth mAuth;
         forgot_password = (TextView)findViewById(R.id.forgot_password);
         forgot_password.setOnClickListener(this);
 
+        category = (Button) findViewById(R.id.category);
+        category.setOnClickListener(this);
+
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -51,7 +54,6 @@ private FirebaseAuth mAuth;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.register:
-
                 startActivity(new Intent(this, Registraition.class));
                 break;
             case R.id.Login:
@@ -60,6 +62,11 @@ private FirebaseAuth mAuth;
             case R.id.forgot_password:
                 startActivity(new Intent(this,ForgotPassword.class));
                 break;
+            case R.id.category:
+                startActivity(new Intent(this, Categories.class));
+                break;
+
+
         }
     }
 
