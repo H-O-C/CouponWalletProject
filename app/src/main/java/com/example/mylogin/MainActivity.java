@@ -49,7 +49,7 @@ private Button category;
         mAuth = FirebaseAuth.getInstance();
 
     }
-//what
+//wha
     @Override
     public void onClick(View view) {
         switch (view.getId()){
