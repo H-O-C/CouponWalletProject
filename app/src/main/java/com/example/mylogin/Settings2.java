@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,14 +33,14 @@ public class Settings2 extends AppCompatActivity {
 
     ImageView imageToUpload; //Upload image
 
-    Button category; // Categories activity button
-    Button mySettings; // Settings activity button
-    Button myLocation; // set the user location
+    ImageButton newSettings;// Settings activity button
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings2);
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
+        newSettings = (ImageButton) findViewById(R.id.settingsBtn);
         user = FirebaseAuth.getInstance().getCurrentUser(); // gets current user
         reference = FirebaseDatabase.getInstance().getReference("Users"); // the reference get the known data base path "Users"
         userID = user.getUid(); // To get the directory after "Users" you need the userID which is different and automatically generated for each user. From the userID directory, you can access the user data
@@ -62,6 +63,12 @@ public class Settings2 extends AppCompatActivity {
 
             }
         });
+        newSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings2.this, Settings.class));
+            }
+        });
 
         imageToUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,4 +88,5 @@ public class Settings2 extends AppCompatActivity {
             imageToUpload.setImageURI(selectedImage);
         }
     }
+
 }

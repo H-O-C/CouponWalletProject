@@ -7,7 +7,6 @@
     tools:context=".Settings2">
 
 
-
     <ImageView
         android:id="@+id/imageToUpload"
         android:layout_width="175dp"
@@ -86,4 +85,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"></LinearLayout>
+
+    <ImageButton
+        android:id="@+id/settingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/imageToUpload"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rsz_2settings"
+        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,17 +17,21 @@ import com.google.firebase.auth.FirebaseUser;
 public class Settings extends AppCompatActivity {
     Button delAccount;
     Button changePsswd;
-    ImageButton myLogo;
     Button _logOut;
+    Button _coupons;
+    Button _nearbyStores;
+    ImageButton myLogo;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        delAccount = findViewById(R.id.deleteBtn);
-        changePsswd = findViewById(R.id.ResetPassword);
-        _logOut = findViewById(R.id.logOut);
+        _coupons = findViewById(R.id.button);
+        _nearbyStores = findViewById(R.id.button2);
+        changePsswd = findViewById(R.id.button3);
+        delAccount = findViewById(R.id.button4);
+        _logOut = findViewById(R.id.button5);
         myLogo = findViewById(R.id.imageButton);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -45,6 +49,18 @@ public class Settings extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+            }
+        });
+        _coupons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.this, Categories.class));
+            }
+        });
+        _nearbyStores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.this, MapsActivity.class));
             }
         });
         changePsswd.setOnClickListener(new View.OnClickListener() {
