@@ -194,6 +194,15 @@ public class Coupons {
 
 
     }
+void setCoupons(String _id, String _title, String _exp, String _descrption, String _code, String _url)
+{
+    ID = _id ;
+    title = _title;
+    desc = _descrption;
+    code = _code;
+    url = _url;
+    enddate = _exp;
 
+}
 
 }
