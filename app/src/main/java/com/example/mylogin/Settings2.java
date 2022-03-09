@@ -23,24 +23,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Settings2 extends AppCompatActivity {
+public class Settings2 extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
     FirebaseUser user;
     DatabaseReference reference; // user, reference, and userID will be needed to display the user info/email, name.
     String userID;
+    ImageButton newSettings;// Settings activity button
 
     ImageView imageToUpload; //Upload image
-
-    ImageButton newSettings;// Settings activity button
+    Button bUploadImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings2);
-        imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         newSettings = (ImageButton) findViewById(R.id.settingsBtn);
+        imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
+        bUploadImage = (Button) findViewById(R.id.button6);
+        imageToUpload.setOnClickListener(this);
+        bUploadImage.setOnClickListener(this);
         user = FirebaseAuth.getInstance().getCurrentUser(); // gets current user
         reference = FirebaseDatabase.getInstance().getReference("Users"); // the reference get the known data base path "Users"
         userID = user.getUid(); // To get the directory after "Users" you need the userID which is different and automatically generated for each user. From the userID directory, you can access the user data
@@ -81,12 +84,23 @@ public class Settings2 extends AppCompatActivity {
 
     }
     @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imageToUpload:
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                break;
+            case R.id.button6:
+
+                break;
+        }
+    }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
             imageToUpload.setImageURI(selectedImage);
         }
     }
-
 }
