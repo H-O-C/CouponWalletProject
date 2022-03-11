@@ -25,9 +25,6 @@
             android:name=".CouponPage"
             android:exported="true" />
         <activity
-            android:name=".UserProfile"
-            android:exported="true" />
-        <activity
             android:name=".ForgotPassword"
             android:exported="true" />
         <activity

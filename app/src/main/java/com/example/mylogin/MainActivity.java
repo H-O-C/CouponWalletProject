@@ -55,11 +55,6 @@ private FirebaseAuth mAuth;
             case R.id.forgot_password:
                 startActivity(new Intent(this,ForgotPassword.class));
                 break;
-            case R.id.category:
-                startActivity(new Intent(this, Categories.class));
-                break;
-
-
         }
     }
 
