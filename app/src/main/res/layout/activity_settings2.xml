@@ -103,12 +103,21 @@
     <Button
         android:id="@+id/button6"
         android:layout_width="94dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="88dp"
         android:layout_marginBottom="12dp"
-        android:text="Upload"
+        android:text="select"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageToUpload"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:text="Save"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintTop_toBottomOf="@+id/imageToUpload" />
 </androidx.constraintlayout.widget.ConstraintLayout>

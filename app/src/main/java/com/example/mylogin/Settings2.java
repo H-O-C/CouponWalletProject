@@ -3,6 +3,7 @@ package com.example.mylogin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -14,7 +15,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +26,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Settings2 extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,18 +43,25 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
     String userID;
     ImageButton newSettings;// Settings activity button
 
-    ImageView imageToUpload; //Upload image
-    Button bUploadImage;
+    StorageReference storageReference;
+    ImageView imageToUpload; // Profile Image
+    Button bUploadImage; //Select Photo Button
+    Button saveImage;
+    Uri selectedImage;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings2);
         newSettings = (ImageButton) findViewById(R.id.settingsBtn);
+
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
+        saveImage = (Button) findViewById(R.id.button7);
         bUploadImage = (Button) findViewById(R.id.button6);
-        imageToUpload.setOnClickListener(this);
+        saveImage.setOnClickListener(this);
         bUploadImage.setOnClickListener(this);
+
         user = FirebaseAuth.getInstance().getCurrentUser(); // gets current user
         reference = FirebaseDatabase.getInstance().getReference("Users"); // the reference get the known data base path "Users"
         userID = user.getUid(); // To get the directory after "Users" you need the userID which is different and automatically generated for each user. From the userID directory, you can access the user data
@@ -72,26 +90,38 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
                 startActivity(new Intent(Settings2.this, Settings.class));
             }
         });
-
-        imageToUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-            }
-
-        });
-
     }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.imageToUpload:
+            case R.id.button6:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
-            case R.id.button6:
-
+            case R.id.button7:
+                progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("Uploading File.....");
+                progressDialog.show();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
+                Date now = new Date();
+                String filename = formatter.format((now));
+                storageReference = FirebaseStorage.getInstance().getReference("images/"+filename);
+                storageReference.putFile(selectedImage)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Toast.makeText(Settings2.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
+                                if(progressDialog.isShowing())
+                                    progressDialog.dismiss();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(progressDialog.isShowing())
+                            progressDialog.dismiss();
+                        Toast.makeText(Settings2.this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
     }
@@ -99,7 +129,7 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
+            selectedImage = data.getData();
             imageToUpload.setImageURI(selectedImage);
         }
     }
