@@ -72,7 +72,7 @@ public class Settings extends AppCompatActivity {
         myLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Settings.this, Settings2.class));
+                startActivity(new Intent(Settings.this, UserProfile.class));
             }
         });
         _logOut.setOnClickListener((new View.OnClickListener() {
