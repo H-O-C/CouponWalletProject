@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/activity_categories.xml" value="0.1" />
+        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/activity_categories.xml" value="0.33" />
         <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/activity_coupon_page.xml" value="0.1" />
-        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/coupon_item.xml" value="0.1" />
+        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/activity_maps.xml" value="0.1" />
+        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/activity_registraition.xml" value="0.1" />
+        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
+        <entry key="..\:/Users/Profe/Desktop/CouponWalletProject/app/src/main/res/layout/coupon_item.xml" value="0.22" />
         <entry key="..\:/Users/Profe/Desktop/Stuff/New Folder (3)/CouponWalletProject/app/src/main/res/layout/activity_categories.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/Profe/Desktop/Stuff/New Folder (3)/CouponWalletProject/app/src/main/res/layout/activity_coupon_page.xml" value="0.171225937183384" />
         <entry key="..\:/Users/Profe/Desktop/Stuff/New Folder (3)/CouponWalletProject/app/src/main/res/layout/activity_main.xml" value="0.25" />

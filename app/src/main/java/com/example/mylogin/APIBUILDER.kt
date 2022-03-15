@@ -12,7 +12,7 @@ import java.net.URL
 object APIBUILDER
 
 {
-    private const val apkey = "9da784d3351027e3709ea42d8760a92f" //The API KEY
+    private const val apkey = "ef2432bed91590bfa990bc164025b7cf" //The API KEY
     private const val incremental = true
 
     //$last_extract_datetime = ; // Ideally leave this blank. Populate only if you want to override last extract time stored in the system
@@ -23,13 +23,14 @@ object APIBUILDER
     //This calls the API
     //var last_extract = (empty(valast_extract_datetime) ? '' : strtotime($last_extract_datetime) )
     private const val URL =
-        "https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "format=" + format + "off_record=" + off_record
+        "https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "&format=" + format + "&off_record=" + off_record
 
+    private const val testURL ="https://couponapi.org/api/getFeed/?API_KEY=ef2432bed91590bfa990bc164025b7cf&incremental=true&format=json&off_record=false"
     //CREATE HTTP CLIENT
     private val okHttp = OkHttpClient.Builder()
 
     //retrofit builder
-    private val builder = Retrofit.Builder().baseUrl(URL)
+    private val builder = Retrofit.Builder().baseUrl(testURL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttp.build())
 
@@ -38,7 +39,7 @@ object APIBUILDER
     private val retrofit = builder.build()
 
     //we will use this class to create an anonymous inner class function that
-    //implements Country service Interface
+    //implements Coupon service Interface
 
 
     fun <T> buildService (serviceType :Class<T>):T{

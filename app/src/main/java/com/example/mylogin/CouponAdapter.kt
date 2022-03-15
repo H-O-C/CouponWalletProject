@@ -4,12 +4,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 
-class CountriesAdapter(private val couponsList: List<CouponsJson>) : RecyclerView.Adapter<CountriesAdapter.ViewHolder>() {
+class CouponAdapter(private val couponsList: List<CouponsJson>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -25,7 +23,7 @@ class CountriesAdapter(private val couponsList: List<CouponsJson>) : RecyclerVie
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("Response", "List Count :${couponsList.size} ")
+        Log.d("coupons", "List Count :${couponsList.size} ")
 
 
         return holder.bind(couponsList[position])
