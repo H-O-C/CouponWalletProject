@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,6 +69,14 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
         userID = user.getUid(); // To get the directory after "Users" you need the userID which is different and automatically generated for each user. From the userID directory, you can access the user data
         final TextView emailAddress = (TextView) findViewById(R.id.EmailTxt); // the final text to display on user profile
         final TextView _name = (TextView) findViewById((R.id.NameTxt));
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(imageToUpload);
+            }
+        });
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() { // function for displaying user info
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -84,6 +94,7 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
 
             }
         });
+
         newSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,17 +113,21 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
                 progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("Uploading File.....");
                 progressDialog.show();
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
-                Date now = new Date();
-                String filename = formatter.format((now));
-                storageReference = FirebaseStorage.getInstance().getReference("images/"+filename);
-                storageReference.putFile(selectedImage)
+
+                final StorageReference fileRef = storageReference.child("profile.jpg");
+                fileRef.putFile(selectedImage)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Toast.makeText(Settings2.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
                                 if(progressDialog.isShowing())
                                     progressDialog.dismiss();
+                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Picasso.get().load(uri).into(imageToUpload);
+                                    }
+                                });
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
