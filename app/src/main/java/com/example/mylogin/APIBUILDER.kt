@@ -25,7 +25,7 @@ object APIBUILDER
     private const val URL =
         "https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "&format=" + format + "&off_record=" + off_record
 
-    private const val testURL ="https://couponapi.org/api/getFeed/?API_KEY=ef2432bed91590bfa990bc164025b7cf&incremental=true&format=json&off_record=false"
+    private const val testURL ="https://couponapi.org/"
     //CREATE HTTP CLIENT
     private val okHttp = OkHttpClient.Builder()
 

@@ -8,10 +8,14 @@ data class CouponsJson(
     val offer_id: Int,
     val title: String,
     val description: String,
+    val label: String,
+    val code: String,
     val featured: String,
     val source: String,
-    val url: String,
+    val deeplink : String,
     val affiliate_link: String,
+    val cashback_link: String,
+    val url: String,
     val image_url: String,
     val brand_logo: String,
     val type: String,
@@ -21,14 +25,6 @@ data class CouponsJson(
     val end_date: String,
     val status: String,
     val primary_location: String,
-    val rating: Int,
-    val label: String,
     val language: String,
-    val couponInfos: couponInfo
-) {
-    data class couponInfo(
-        val flag: String,
-        @SerializedName("_id")
-        val id: Int
-    )
-}
+    val rating: Int,
+)
