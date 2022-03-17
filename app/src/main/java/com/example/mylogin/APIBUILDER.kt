@@ -1,5 +1,6 @@
 package com.example.mylogin
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,8 +25,9 @@ object APIBUILDER
     //var last_extract = (empty(valast_extract_datetime) ? '' : strtotime($last_extract_datetime) )
     private const val URL =
         "https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "&format=" + format + "&off_record=" + off_record
+    //"https://couponapi.org/api/getFeed/?API_KEY=ef2432bed91590bfa990bc164025b7cf&incremental=true&format=json&off_record=false"
 
-    private const val testURL ="https://couponapi.org/api/getFeed/?API_KEY=ef2432bed91590bfa990bc164025b7cf&incremental=true&format=json&off_record=false"
+    private const val testURL = "https://couponapi.org/api/"
     //CREATE HTTP CLIENT
     private val okHttp = OkHttpClient.Builder()
 

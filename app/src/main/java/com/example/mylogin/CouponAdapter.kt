@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CouponAdapter(private val couponsList: List<CouponsJson>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
+class CouponAdapter(private val couponsList: MutableList<Offer>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -34,9 +34,9 @@ class CouponAdapter(private val couponsList: List<CouponsJson>) : RecyclerView.A
 
         var tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
         var tvCases = itemView.findViewById<TextView>(R.id.tvCases)
-        fun bind(coupons: CouponsJson) {
+        fun bind(coupons: Offer) {
 
-            val name ="ID :${coupons.offer_id.toString()}"
+            val name ="ID :${coupons.offerId.toString()}"
             tvTitle.text = coupons.title
             tvCases.text = name
         }
