@@ -9,3 +9,4 @@ data class Coupons(
     @SerializedName("result")
     val result: Boolean
 )
+
