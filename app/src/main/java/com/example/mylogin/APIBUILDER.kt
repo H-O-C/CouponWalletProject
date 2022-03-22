@@ -3,16 +3,32 @@ package com.example.mylogin
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+import java.util.*
+
 
 object APIBUILDER
 
 {
-    private const val apkey = "9da784d3351027e3709ea42d8760a92f" //The API KEY
+
+    private var random: Random = Random()
+    var Check: Int = random.nextInt(16)
+
+    private val result = when (Check) {
+        in 0..5 -> {
+            "9da784d3351027e3709ea42d8760a92f"
+        }
+        in 6..10 -> {
+            "3a1ff1fa2224f2a98f326bfaf0661ea8"
+        }
+        in 11..15 -> {
+            "bf944b0aefbc4ad84264f0c5eab8e7bd"
+        }
+        else -> {"9da784d3351027e3709ea42d8760a92f"}
+    }
+
+
+
+    private  val apkey = result //The API KEY
     private const val incremental = true
 
     //$last_extract_datetime = ; // Ideally leave this blank. Populate only if you want to override last extract time stored in the system
@@ -22,7 +38,7 @@ object APIBUILDER
 
     //This calls the API
     //var last_extract = (empty(valast_extract_datetime) ? '' : strtotime($last_extract_datetime) )
-    private const val URL =
+    private val URL =
         "https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "format=" + format + "off_record=" + off_record
 
     //CREATE HTTP CLIENT
