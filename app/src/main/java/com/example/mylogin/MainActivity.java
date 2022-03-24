@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +22,6 @@ private TextView register, forgot_password;
 private EditText email , password;
 private Button Login;
 private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +39,14 @@ private FirebaseAuth mAuth;
 
         forgot_password = (TextView)findViewById(R.id.forgot_password);
         forgot_password.setOnClickListener(this);
-
         mAuth = FirebaseAuth.getInstance();
 
     }
-
+//whadfsaffda\
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.register:
-
                 startActivity(new Intent(this, Registraition.class));
                 break;
             case R.id.Login:
@@ -88,7 +83,7 @@ private FirebaseAuth mAuth;
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user.isEmailVerified()){
                         //redirect to maps page
-                        startActivity(new Intent(MainActivity.this,UserProfile.class));
+                        startActivity(new Intent(MainActivity.this,Settings2.class));
                     }else{
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this,"Check email for account verification", Toast.LENGTH_LONG).show();
