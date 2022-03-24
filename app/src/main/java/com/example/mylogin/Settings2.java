@@ -113,13 +113,13 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
                 progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("Uploading File.....");
                 progressDialog.show();
-
                 final StorageReference fileRef = storageReference.child("profile.jpg");
                 fileRef.putFile(selectedImage)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Toast.makeText(Settings2.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
+                                saveImage.setVisibility(View.INVISIBLE);
                                 if(progressDialog.isShowing())
                                     progressDialog.dismiss();
                                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -146,6 +146,7 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             selectedImage = data.getData();
             imageToUpload.setImageURI(selectedImage);
+            saveImage.setVisibility(View.VISIBLE);
         }
     }
 }
