@@ -47,7 +47,7 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
 
     StorageReference storageReference;
     ImageView imageToUpload; // Profile Image
-    Button bUploadImage; //Select Photo Button
+    ImageView bUploadImage; //Select Photo Button
     Button saveImage;
     Uri selectedImage;
     ProgressDialog progressDialog;
@@ -60,7 +60,7 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         saveImage = (Button) findViewById(R.id.button7);
-        bUploadImage = (Button) findViewById(R.id.button6);
+        bUploadImage = (ImageView) findViewById(R.id.button6);
         saveImage.setOnClickListener(this);
         bUploadImage.setOnClickListener(this);
 
