@@ -10,6 +10,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -99,6 +101,30 @@ public class Settings2 extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Settings2.this, Settings.class));
+            }
+        });
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.NavBar);
+        bottomNavigationView.setSelectedItemId(R.id.profileB);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.profileB:
+
+                        return true;
+                    case R.id.homeB:
+                        startActivity(new Intent(getApplicationContext(),MapsActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.couponB:
+                        startActivity(new Intent(getApplicationContext(),CouponPage.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                }
+                return false;
             }
         });
     }

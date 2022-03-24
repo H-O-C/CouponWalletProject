@@ -1,5 +1,6 @@
 package com.example.mylogin
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -25,6 +27,25 @@ class CouponPage : AppCompatActivity() {
         desc.text =  intent.getStringExtra("Description")
         val barCode = findViewById<ImageView>(R.id.barCode)
         barCode.setImageBitmap(intent.getStringExtra("CODE")?.let { generateBarCode(it) })
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.NavBar)
+        bottomNavigationView.selectedItemId = R.id.couponB
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.profileB -> {
+                    startActivity(Intent(applicationContext, Settings2::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.homeB -> {
+                    startActivity(Intent(applicationContext, MapsActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.couponB -> return@OnNavigationItemSelectedListener true
+            }
+            false
+        })
     }
     fun generateBarCode(text: String): Bitmap {
         val width = 500
