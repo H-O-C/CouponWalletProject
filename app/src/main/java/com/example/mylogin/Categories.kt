@@ -20,9 +20,7 @@ class Categories : AppCompatActivity() {
     var coupList: MutableList<Offer> = ArrayList()
         val buttondynamic = Button(this)
         val intent = Intent(this, CouponPage::class.java)
-        loadCoupons(coupList, intent, buttondynamic)
-        val rl = RelativeLayout(this)
-        val llmain = LinearLayout(this)
+        loadCoupons()
 
         /*
         for (coupon in 0 until coupList.size) {
@@ -51,7 +49,7 @@ class Categories : AppCompatActivity() {
 
     }
 
-    private fun loadCoupons(_coupList : MutableList<Offer>, _intent : Intent, _button : Button) {
+    private fun loadCoupons() {
         //initiate the service
         val destinationService = APIBUILDER.buildService(CouponService::class.java)
         val requestCall = destinationService.getAffectedCouponList()
@@ -60,7 +58,9 @@ class Categories : AppCompatActivity() {
             override fun onResponse(call: Call<Coupons>, response: Response<Coupons>) {
                 if (response.isSuccessful) {
                     val couponList = response.body()!!
-                    for (coupon in 0 until couponList.offers.size) {
+
+                    /*
+                   for (coupon in 0 until couponList.offers.size) {
 
                         _button.layoutParams = LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -88,6 +88,12 @@ class Categories : AppCompatActivity() {
                         "Something went wrong ${response.message()}",
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+
+                     */
+                    val couponName = findViewById<TextView>(R.id.testview)
+                    couponName.text =  couponList.toString()
+
                 }
             }
 
