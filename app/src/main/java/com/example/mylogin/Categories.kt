@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -16,44 +18,45 @@ fun reading(csv_file : String, coupList : MutableList<Coupons>, catList : Mutabl
     var line: String
 
     try {
-            readers = BufferedReader(FileReader(csv_file))
-            while (readers.readLine().also { line = it } != null) {
-                var number = 0
-                val values = line.split(",").toTypedArray()
-                val row: List<String> = line.split(",")
-                for (index in values) {
-                    val coupon = Coupons()
-                    coupon.setCoupons(
-                        row[0], row[1], row[18], row[6], row[12],row[5]
-                    )
-                    //due to bug it will duplicate it 10 times over, with this it does not
-                    number += 1
-                    if (number % 10 == 0) {
-                        catList.add(row[8])
-                        coupList.add(coupon)
-                    }
+        readers = BufferedReader(FileReader(csv_file))
+        while (readers.readLine().also { line = it } != null) {
+            var number = 0
+            val values = line.split(",").toTypedArray()
+            val row: List<String> = line.split(",")
+            for (index in values) {
+                val coupon = Coupons()
+                coupon.setCoupons(
+                    row[0], row[1], row[18], row[6], row[12],row[5]
+                )
+                //due to bug it will duplicate it 10 times over, with this it does not
+                number += 1
+                if (number % 10 == 0) {
+                    catList.add(row[8])
+                    coupList.add(coupon)
                 }
             }
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    } finally {
+        try {
+            readers!!.close()
         } catch (e: IOException) {
             e.printStackTrace()
-        } finally {
-            try {
-                readers!!.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
         }
+    }
 
 
 
 }
-fun reading2(minput : InputStreamReader, coupList : MutableList<Coupons>, catList : MutableList<String>)
+fun reading2(minput : InputStreamReader, coupList : MutableList<Coupons>, catList : MutableList<String>, coupCat : MutableList<CouponCategory>)
 {
     var line: String?
     val reader = BufferedReader(minput)
     var displayData = ""
     while (reader.readLine().also { line = it } != null) {
         val row: List<String> = line!!.split(",")
+        var numberz = 0
         var number = 0
         //Creates a row system
         displayData =
@@ -78,23 +81,67 @@ fun reading2(minput : InputStreamReader, coupList : MutableList<Coupons>, catLis
                 row[12], row[13], row[14], row[15], row[16], row[17]
             )
             //due to bug it will duplicate it 10 times over, with this it does not
-            number += 1
-            if (number % 10 == 0) {
+            numberz += 1
+            if (numberz % 10 == 0) {
                 catList.add(row[8])
                 coupList.add(coupon)
             }
 
+
+
+
         }
+
+
     }
 
 }
+fun AdapterList(coupList : MutableList<Coupons>, catList : MutableList<String>, coupCat : MutableList<CouponCategory>)
+{
+
+    var cates = 0
+    while (cates in 0 until catList.size )
+    {
+        val couponcat = CouponCategory()
+        val selectedSeries = coupList.toMutableList()
+        val Categorys = catList.find { actor -> catList[cates].equals(actor) }
+        var coups = 0
+        while (coups in 0 until selectedSeries.size)
+        {
+
+            var coupListd: MutableList<Coupons> = mutableListOf()
+            if (!(assertEquals(Categorys, selectedSeries[coups].cate)))
+            {
+                selectedSeries.remove(selectedSeries[coups])
+
+            }
+
+        }
+
+    }
+    coupList.clear()
+    catList.clear()
+
+}
+
+fun assertEquals(categorys: String?, cate: String?): Boolean {
+
+    if (categorys == cate)
+        return true
+    return false
+}
 
 class Categories : AppCompatActivity() {
+    var mainCategoryRecycler: RecyclerView? = null
+    var mainRecyclerAdapter: CategoryAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
-        val coupList: MutableList<Coupons> = ArrayList()
-        val catList: MutableList<String> = ArrayList()
+        var coupList: MutableList<Coupons> = mutableListOf()
+        var coupList2: MutableList<Coupons> = mutableListOf()
+        var catList: MutableList<String> = mutableListOf()
+        val fcoupList: MutableList<CouponCategory> = mutableListOf()
+
         val minput = InputStreamReader(assets.open("tessts.csv"))
         val apkey = "9da784d3351027e3709ea42d8760a92f" //The API KEY
         val incremental = true
@@ -110,87 +157,186 @@ class Categories : AppCompatActivity() {
             "https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "format=" + format + "off_record=" + off_record
 
         //reading(csv_file,coupList,catList)
-        reading2(minput,coupList,catList)
+        reading2(minput,coupList,catList,fcoupList)
+        catList = catList.distinct() as MutableList<String>
+        coupList = coupList.distinct() as MutableList<Coupons>
+
+        catList.remove("Category")
+        catList.remove("")
+        coupList.removeAt(0)
+        catList.size
+        coupList.size
+        //AdapterList(coupList,catList,fcoupList)
+
         val distinct = catList.distinct().toList()
         val rl = RelativeLayout(this)
         val llmain = LinearLayout(this)
 
+        val number = 1;
 
 
-
-        for (category in distinct.indices) {
-            rl.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-
-            val llmain2 = LinearLayout(this)
-
-            llmain.layoutParams =
-                ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+        if(number == 1) {
+            for (category in distinct.indices) {
+                rl.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
                 )
 
-            llmain.orientation = LinearLayout.HORIZONTAL
+                val llmain2 = LinearLayout(this)
 
-            val categoryslider = HorizontalScrollView(this)
-            categoryslider.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+                llmain.layoutParams =
+                    ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
 
+                llmain.orientation = LinearLayout.HORIZONTAL
 
-            for (coupon in 0 until coupList.size) {
-                val buttondynamic = Button(this)
-                buttondynamic.layoutParams = LinearLayout.LayoutParams(
+                val categoryslider = HorizontalScrollView(this)
+                categoryslider.layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
-
                 )
-                llmain2.setLayoutParams(
+
+
+                for (coupon in 0 until coupList.size) {
+                    val buttondynamic = Button(this)
+                    buttondynamic.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+
+                    )
+                    llmain2.setLayoutParams(
+                        ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                    )
+                    llmain2.setOrientation(LinearLayout.HORIZONTAL)
+                    buttondynamic.text = coupList[coupon].getValues()
+                    buttondynamic.tag = coupList[coupon].id
+                    buttondynamic.setOnClickListener()
+                    {
+                        val intent = Intent(this, CouponPage::class.java)
+                        intent.putExtra("Description", coupList[coupon].desc)
+                        intent.putExtra("Expiration", coupList[coupon].enddate)
+                        intent.putExtra("Title", coupList[coupon].title)
+                        intent.putExtra("CODE", coupList[coupon].code)
+                        intent.putExtra("Category", coupList[coupon].cate)
+                        intent.putExtra("Store", coupList[coupon].store)
+                        intent.putExtra("ID", coupList[coupon].id)
+                        intent.putExtra("value", coupList[coupon].values)
+
+
+                        startActivity(intent)
+                    }
+                    if (coupList[coupon].cate == distinct[category]) {
+                        llmain2.addView(buttondynamic)
+                    }
+                }
+                llmain2.tag = category
+                llmain.tag = category + 1
+                categoryslider.tag = distinct[category]
+                categoryslider.addView(llmain2)
+                val cateName = TextView(this)
+                cateName.setLayoutParams(
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                     )
                 )
-                llmain2.setOrientation(LinearLayout.HORIZONTAL)
-                buttondynamic.text = coupList[coupon].getValues()
-                buttondynamic.tag = coupList[coupon].id
-                buttondynamic.setOnClickListener()
-                {
-                    val intent = Intent(this, CouponPage::class.java)
-                    intent.putExtra("Description", coupList[coupon].desc)
-                    intent.putExtra("Expiration", coupList[coupon].enddate)
-                    intent.putExtra("Title", coupList[coupon].title)
-                    intent.putExtra("CODE", coupList[coupon].code)
-
-
-                    startActivity(intent)
-                }
-                if (coupList[coupon].cate == distinct[category]) {
-                    llmain2.addView(buttondynamic)
-                }
+                cateName.text = distinct[category]
+                llmain.addView(cateName)
+                llmain.addView(categoryslider, category)
             }
-            llmain2.tag = category
-            llmain.tag = category + 1
-            categoryslider.tag = distinct[category]
-            categoryslider.addView(llmain2)
-            val cateName = TextView(this)
-            cateName.setLayoutParams(
+            rl.addView(llmain)
+
+
+            this.setContentView(rl)
+
+
+        }
+/*
+        var cates = 0
+        catList = catList.distinct() as MutableList<String>
+        catList.removeAt(0)
+        catList.removeAt(6)
+        while (cates in 0 until catList.size )
+        {
+            var coups = 0
+            while (coups in 0 until coupList.size)
+            {
+                val couponcat = CouponCategory()
+                if (catList[cates] != null)
+                {
+                    couponcat.categoryTitle = catList[cates]
+                }
+
+
+                if (catList[cates].toString() == coupList[coups].getCate().toString())
+                {
+                    if(coupList[coups].cate != null)
+                    {
+                        couponcat.categoryItemList?.add(coupList[coups])
+
+                    }
+                }
+
+            }
+
+        }
+
+ */
+
+        /*
+        for (coupon in 0 until coupList.size) {
+            val buttondynamic = Button(this)
+            buttondynamic.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+
+            )
+            llmain2.setLayoutParams(
                 ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             )
-            cateName.text = distinct[category]
-            llmain.addView(cateName)
-            llmain.addView(categoryslider, category)
+            llmain2.setOrientation(LinearLayout.HORIZONTAL)
+            buttondynamic.text = coupList[coupon].getValues()
+            buttondynamic.tag = coupList[coupon].id
+            buttondynamic.setOnClickListener()
+            {
+                val intent = Intent(this, CouponPage::class.java)
+                intent.putExtra("Description", coupList[coupon].desc)
+                intent.putExtra("Expiration", coupList[coupon].enddate)
+                intent.putExtra("Title", coupList[coupon].title)
+                intent.putExtra("CODE", coupList[coupon].code)
+                intent.putExtra("Category", coupList[coupon].cate)
+                intent.putExtra("Store", coupList[coupon].store)
+                intent.putExtra("ID", coupList[coupon].id)
+                intent.putExtra("value", coupList[coupon].values)
+
+
+                startActivity(intent)
+            }
+            if (coupList[coupon].cate == distinct[category]) {
+                llmain2.addView(buttondynamic)
+            }
         }
-        rl.addView(llmain)
 
+         */
 
-        this.setContentView(rl)
 
     }
+    private fun setMainCategoryRecycler(allCategoryList: MutableList<CouponCategory>) {
+        mainCategoryRecycler = findViewById<RecyclerView>(R.id.coupon_recycler)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        mainCategoryRecycler?.layoutManager = layoutManager
+        mainRecyclerAdapter = CategoryAdapter(this, allCategoryList)
+        mainCategoryRecycler?.adapter = mainRecyclerAdapter
+    }
+
+
+
 }
