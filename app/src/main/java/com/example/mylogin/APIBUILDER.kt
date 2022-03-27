@@ -49,7 +49,7 @@ object APIBUILDER {
     private val okHttp = OkHttpClient.Builder()
 
 
-    val apiResponse =
+   /* val apiResponse =
         URL("https://couponapi.org/api/getFeed/?API_KEY=" + apkey + "&incremental=" + incremental + "format=" + format + "off_record=" + off_record).readText()
 
 
@@ -73,7 +73,7 @@ object APIBUILDER {
         } catch (e: Exception) {
           return null
         }
-    }
+    }*/
 
 
 
